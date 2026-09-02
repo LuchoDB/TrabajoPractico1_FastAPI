@@ -9,6 +9,7 @@ app = FastAPI(
         "con almacenamiento en memoria y modelos de validación Pydantic."
     ),
     version="1.0.0",
+    redoc_url=None,
 )
 
 # Inclusión de routers
@@ -26,7 +27,6 @@ def read_root():
     return {
         "message": "Bienvenido a la API del Trabajo Practico 1 - Programacion 4",
         "docs": "/docs",
-        "redoc": "/redoc",
         "endpoints": {
             "usuarios": "/users",
             "productos": "/products",

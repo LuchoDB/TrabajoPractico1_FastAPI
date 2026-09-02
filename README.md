@@ -75,12 +75,11 @@ El servidor quedara escuchando en:
 
 ---
 
-## Acceso a la Documentacion Interactiva (Swagger y ReDoc)
+## Acceso a la Documentacion Interactiva (Swagger)
 
 FastAPI genera automaticamente la documentacion OpenAPI interactiva:
 
 - Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
 ### Como probar los endpoints en Swagger UI:
 
