@@ -21,10 +21,10 @@ app.include_router(products_router, prefix="/products")
 app.include_router(products_router, prefix="/producto", include_in_schema=False)
 
 
-@app.get("/", summary="Endpoint raiz de bienvenida")
+@app.get("/", summary="Endpoint raíz de bienvenida")
 def read_root():
     return {
-        "message": "Primer clase de FastAPI",
+        "message": "Bienvenido a la API del Trabajo Practico 1 - Programacion 4",
         "docs": "/docs",
         "redoc": "/redoc",
         "endpoints": {
