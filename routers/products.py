@@ -11,7 +11,7 @@ from models.products import (
 
 router = APIRouter(tags=["Productos"])
 
-# Almacenamiento en memoria para la entidad propia (Producto)
+# Almacenamiento en memoria para la entidad propia (Producto) - exactamente 5 campos
 productos: List[Product] = [
     Product(
         id=1,
@@ -19,7 +19,6 @@ productos: List[Product] = [
         category="Computación",
         price=1250.0,
         stock=15,
-        is_active=True,
     ),
     Product(
         id=2,
@@ -27,7 +26,6 @@ productos: List[Product] = [
         category="Periféricos",
         price=45.5,
         stock=50,
-        is_active=True,
     ),
     Product(
         id=3,
@@ -35,7 +33,6 @@ productos: List[Product] = [
         category="Periféricos",
         price=95.0,
         stock=0,
-        is_active=False,
     ),
     Product(
         id=4,
@@ -43,7 +40,6 @@ productos: List[Product] = [
         category="Monitores",
         price=320.0,
         stock=8,
-        is_active=True,
     ),
 ]
 
@@ -59,10 +55,6 @@ def get_products(
         None,
         description="Buscar productos por texto contenido en el nombre",
     ),
-    is_active: Optional[bool] = Query(
-        None,
-        description="Filtrar por disponibilidad: true (activos), false (inactivos)",
-    ),
     min_price: Optional[float] = Query(
         None,
         ge=0,
@@ -73,6 +65,10 @@ def get_products(
         ge=0,
         description="Filtrar productos con precio menor o igual a este valor",
     ),
+    in_stock: Optional[bool] = Query(
+        None,
+        description="Filtrar por disponibilidad de stock: true (stock > 0), false (stock == 0)",
+    ),
 ) -> GetProductsResponse:
     resultado = productos
 
@@ -82,14 +78,17 @@ def get_products(
     if name is not None:
         resultado = [p for p in resultado if name.lower() in p.name.lower()]
 
-    if is_active is not None:
-        resultado = [p for p in resultado if p.is_active == is_active]
-
     if min_price is not None:
         resultado = [p for p in resultado if p.price >= min_price]
 
     if max_price is not None:
         resultado = [p for p in resultado if p.price <= max_price]
+
+    if in_stock is not None:
+        if in_stock:
+            resultado = [p for p in resultado if p.stock > 0]
+        else:
+            resultado = [p for p in resultado if p.stock == 0]
 
     return GetProductsResponse(products=resultado)
 
@@ -131,7 +130,6 @@ def create_product(product: Product) -> CreateProductResponse:
         category=product.category,
         price=product.price,
         stock=product.stock,
-        is_active=product.is_active,
         message="Producto creado exitosamente",
     )
 
@@ -152,15 +150,12 @@ def update_product_put(id: int, product_data: UpdateProductRequest) -> UpdatePro
                 prod.price = product_data.price
             if product_data.stock is not None:
                 prod.stock = product_data.stock
-            if product_data.is_active is not None:
-                prod.is_active = product_data.is_active
             return UpdateProductResponse(
                 id=prod.id,
                 name=prod.name,
                 category=prod.category,
                 price=prod.price,
                 stock=prod.stock,
-                is_active=prod.is_active,
                 message=f"El producto {id} ha sido modificado correctamente",
             )
     raise HTTPException(

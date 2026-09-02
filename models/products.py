@@ -7,7 +7,6 @@ class Product(BaseModel):
     category: str
     price: float = Field(..., gt=0, description="Precio del producto, debe ser mayor a cero")
     stock: int = Field(..., ge=0, description="Cantidad en stock, no puede ser negativa")
-    is_active: bool = True
 
 class GetProductsResponse(BaseModel):
     products: List[Product]
@@ -24,7 +23,6 @@ class UpdateProductRequest(BaseModel):
     category: Optional[str] = None
     price: Optional[float] = Field(None, gt=0)
     stock: Optional[int] = Field(None, ge=0)
-    is_active: Optional[bool] = None
 
 class UpdateProductResponse(Product):
     message: str

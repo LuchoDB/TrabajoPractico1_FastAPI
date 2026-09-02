@@ -1,8 +1,8 @@
 # Trabajo Practico 1 - Programacion 4: FastAPI + ABM
 
 API REST desarrollada con FastAPI que implementa dos modulos de ABM (Alta, Baja y Modificacion) completos con almacenamiento en memoria y validacion mediante modelos Pydantic:
-1. ABM de Usuarios (entidad provista por la catedra).
-2. ABM de Productos (entidad propia de 6 campos: id, name, category, price, stock, is_active).
+1. ABM de Usuarios (entidad provista por la catedra: id, name, is_active).
+2. ABM de Productos (entidad propia de 5 campos: id, name, category, price, stock).
 
 ---
 
@@ -89,12 +89,13 @@ FastAPI genera automaticamente la documentacion OpenAPI interactiva:
 TP1 - FastAPI+ABM/
 |-- main.py              # Punto de entrada de la aplicacion e integracion de routers
 |-- requirements.txt     # Lista de dependencias del proyecto
-|-- README.md            # Documentacion e instrucciones de ejecucion
 |-- .gitignore           # Archivos y carpetas ignorados por git
+|-- docs/
+|   `-- README.md        # Documentacion e instrucciones de ejecucion
 |-- models/
 |   |-- __init__.py      # Exportacion de modelos
 |   |-- users.py         # Modelos Pydantic para Usuarios (entidad catedra)
-|   `-- products.py      # Modelos Pydantic para Productos (entidad propia)
+|   `-- products.py      # Modelos Pydantic para Productos (entidad propia: 5 campos)
 |-- routers/
 |   |-- __init__.py      # Exportacion de routers
 |   |-- users.py         # Endpoints del ABM de Usuarios
@@ -151,19 +152,18 @@ Endpoints:
 
 ### ABM de Entidad Propia: Productos (`/products`)
 
-Entidad Product con 6 campos (mas de 5 campos requeridos):
+Entidad Product con exactamente 5 campos:
 - `id` (int): Identificador unico del producto.
 - `name` (str): Nombre o descripcion del producto.
 - `category` (str): Categoria del producto (ej: Computacion, Perifericos, Monitores).
 - `price` (float): Precio unitario (debe ser mayor a cero).
 - `stock` (int): Cantidad en inventario (debe ser mayor o igual a cero).
-- `is_active` (bool): Estado de disponibilidad comercial (por defecto True).
 
 Endpoints:
 1. `GET /products`: Listar productos con filtros combinables:
    - `category` (str): Filtrar por categoria exacta.
    - `name` (str): Buscar coincidencias parciales de texto en el nombre.
-   - `is_active` (bool): Filtrar por productos activos o inactivos.
+   - `in_stock` (bool): Filtrar por disponibilidad de stock (`true` para stock > 0, `false` para stock == 0).
    - `min_price` (float): Precio minimo.
    - `max_price` (float): Precio maximo.
 2. `GET /products/{id}`: Obtener un producto por su ID (devuelve 404 si no existe).
@@ -175,8 +175,7 @@ Endpoints:
        "name": "Disco Solido SSD NVMe 1TB",
        "category": "Almacenamiento",
        "price": 110.0,
-       "stock": 30,
-       "is_active": true
+       "stock": 30
      }
      ```
 4. `PUT /products/{id}`: Modificar los datos de un producto existente (status 200).
@@ -186,8 +185,7 @@ Endpoints:
        "name": "Disco Solido SSD NVMe 1TB Gen4",
        "category": "Almacenamiento",
        "price": 125.0,
-       "stock": 25,
-       "is_active": true
+       "stock": 25
      }
      ```
 5. `PATCH /products/{id}`: Modificacion parcial de un producto.

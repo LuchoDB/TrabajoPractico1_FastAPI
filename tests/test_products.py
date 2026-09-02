@@ -19,7 +19,6 @@ def reset_products():
                 category="Computación",
                 price=1250.0,
                 stock=15,
-                is_active=True,
             ),
             Product(
                 id=2,
@@ -27,7 +26,6 @@ def reset_products():
                 category="Periféricos",
                 price=45.5,
                 stock=50,
-                is_active=True,
             ),
             Product(
                 id=3,
@@ -35,7 +33,6 @@ def reset_products():
                 category="Periféricos",
                 price=95.0,
                 stock=0,
-                is_active=False,
             ),
             Product(
                 id=4,
@@ -43,7 +40,6 @@ def reset_products():
                 category="Monitores",
                 price=320.0,
                 stock=8,
-                is_active=True,
             ),
         ]
     )
@@ -65,12 +61,19 @@ def test_get_products_filter_category():
     assert all(p["category"] == "Periféricos" for p in products)
 
 
-def test_get_products_filter_is_active():
-    response = client.get("/products?is_active=false")
+def test_get_products_filter_in_stock():
+    response = client.get("/products?in_stock=false")
     assert response.status_code == 200
     products = response.json()["products"]
     assert len(products) == 1
     assert products[0]["id"] == 3
+    assert products[0]["stock"] == 0
+
+    response_active = client.get("/products?in_stock=true")
+    assert response_active.status_code == 200
+    products_active = response_active.json()["products"]
+    assert len(products_active) == 3
+    assert all(p["stock"] > 0 for p in products_active)
 
 
 def test_get_products_filter_name_search():
@@ -96,6 +99,7 @@ def test_get_product_by_id_success():
     assert product["id"] == 1
     assert product["name"] == "Notebook Lenovo ThinkPad"
     assert product["price"] == 1250.0
+    assert product["stock"] == 15
 
 
 def test_get_product_by_id_not_found():
@@ -111,7 +115,6 @@ def test_create_product_success():
         "category": "Audio",
         "price": 180.0,
         "stock": 25,
-        "is_active": True,
     }
     response = client.post("/products", json=payload)
     assert response.status_code == 201
@@ -121,7 +124,6 @@ def test_create_product_success():
     assert data["category"] == "Audio"
     assert data["price"] == 180.0
     assert data["stock"] == 25
-    assert data["is_active"] is True
     assert "exitosamente" in data["message"]
 
     # Verificar que existe
@@ -136,7 +138,6 @@ def test_create_product_duplicate_id():
         "category": "Varios",
         "price": 10.0,
         "stock": 5,
-        "is_active": True,
     }
     response = client.post("/products", json=payload)
     assert response.status_code == 400
@@ -151,7 +152,6 @@ def test_create_product_invalid_validation():
         "category": "Varios",
         "price": -5.0,
         "stock": -1,
-        "is_active": True,
     }
     response = client.post("/products", json=payload)
     assert response.status_code == 422
@@ -163,13 +163,13 @@ def test_update_product_put():
         "category": "Computación Premium",
         "price": 1400.0,
         "stock": 10,
-        "is_active": True,
     }
     response = client.put("/products/1", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert data["name"] == "Notebook Lenovo ThinkPad Pro X1"
     assert data["price"] == 1400.0
+    assert data["stock"] == 10
     assert "modificado" in data["message"]
 
     # Verificar persistencia en memoria
