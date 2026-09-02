@@ -50,10 +50,10 @@ source venv/bin/activate
 
 ### 3. Instalar las dependencias
 
-Ejecutar el siguiente comando para instalar las librerias necesarias desde la carpeta docs:
+Ejecutar el siguiente comando para instalar las librerias necesarias:
 
 ```bash
-pip install -r docs/requirements.txt
+pip install -r requirements.txt
 ```
 
 Las dependencias principales son:
@@ -98,10 +98,9 @@ FastAPI genera automaticamente la documentacion OpenAPI interactiva:
 ```text
 TrabajoPractico1_FastAPI/
 |-- main.py              # Punto de entrada de la aplicacion e integracion de routers
+|-- requirements.txt     # Lista de dependencias del proyecto
+|-- README.md            # Documentacion e instrucciones de ejecucion
 |-- .gitignore           # Archivos y carpetas ignorados por git
-|-- docs/
-|   |-- README.md        # Documentacion e instrucciones de ejecucion
-|   `-- requirements.txt # Lista de dependencias del proyecto
 |-- models/
 |   |-- __init__.py      # Exportacion de modelos
 |   |-- users.py         # Modelos Pydantic para Usuarios (entidad catedra)
