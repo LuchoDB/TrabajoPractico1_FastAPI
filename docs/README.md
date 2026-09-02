@@ -58,8 +58,9 @@ Las dependencias principales son:
 
 Iniciar el servidor de desarrollo con recarga automatica ante cambios:
 ```bash
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
+(O alternativamente `uvicorn main:app --reload` si el entorno virtual esta activo y tiene acceso directo a los binarios de Scripts).
 
 El servidor quedara escuchando en:
 `http://127.0.0.1:8000`
