@@ -1,6 +1,9 @@
-# Trabajo Practico 1 - Programacion 4: FastAPI + ABM
+# Programacion 4
+
+# Trabajo Practico 1 - FastAPI + ABM
 
 API REST desarrollada con FastAPI que implementa dos modulos de ABM (Alta, Baja y Modificacion) completos con almacenamiento en memoria y validacion mediante modelos Pydantic:
+
 1. ABM de Usuarios (entidad provista por la catedra: id, name, is_active).
 2. ABM de Productos (entidad propia de 5 campos: id, name, category, price, stock).
 
@@ -24,18 +27,21 @@ cd "TP1 - FastAPI+ABM"
 ### 2. Crear un entorno virtual (recomendado)
 
 En Windows (PowerShell):
+
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
 En Windows (CMD):
+
 ```cmd
 python -m venv venv
 .\venv\Scripts\activate.bat
 ```
 
 En Linux / macOS:
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate
@@ -44,11 +50,13 @@ source venv/bin/activate
 ### 3. Instalar las dependencias
 
 Ejecutar el siguiente comando para instalar las librerias necesarias:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 Las dependencias principales son:
+
 - fastapi: Framework web para construir la API REST.
 - uvicorn: Servidor ASGI de alto rendimiento.
 - pydantic: Validacion de datos y definicion de esquemas.
@@ -57,6 +65,7 @@ Las dependencias principales son:
 ### 4. Levantar la aplicacion
 
 Iniciar el servidor de desarrollo con recarga automatica ante cambios:
+
 ```bash
 uvicorn main:app --reload
 ```
@@ -74,6 +83,7 @@ FastAPI genera automaticamente la documentacion OpenAPI interactiva:
 - ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
 ### Como probar los endpoints en Swagger UI:
+
 1. Abrir el navegador web e ingresar a `http://127.0.0.1:8000/docs`.
 2. Seleccionar el endpoint que se desea probar (por ejemplo, `GET /users` o `POST /products`).
 3. Hacer clic en el boton "Try it out".
@@ -110,6 +120,7 @@ TP1 - FastAPI+ABM/
 ## Detalle de Endpoints Disponibles
 
 ### Endpoint Raiz
+
 - `GET /`: Devuelve un mensaje de bienvenida y los enlaces a la documentacion.
 
 ---
@@ -117,11 +128,13 @@ TP1 - FastAPI+ABM/
 ### ABM de Usuarios (`/users`)
 
 Entidad User definida por la catedra con los campos:
+
 - `id` (int): Identificador unico del usuario.
 - `name` (str): Nombre del usuario.
 - `is_active` (bool): Estado activo/inactivo (por defecto True).
 
 Endpoints:
+
 1. `GET /users`: Listar usuarios.
    - Parametro de consulta opcional `is_active` (boolean):
      - `?is_active=true`: Devuelve unicamente usuarios activos.
@@ -153,6 +166,7 @@ Endpoints:
 ### ABM de Entidad Propia: Productos (`/products`)
 
 Entidad Product con exactamente 5 campos:
+
 - `id` (int): Identificador unico del producto.
 - `name` (str): Nombre o descripcion del producto.
 - `category` (str): Categoria del producto (ej: Computacion, Perifericos, Monitores).
@@ -160,6 +174,7 @@ Entidad Product con exactamente 5 campos:
 - `stock` (int): Cantidad en inventario (debe ser mayor o igual a cero).
 
 Endpoints:
+
 1. `GET /products`: Listar productos con filtros combinables:
    - `category` (str): Filtrar por categoria exacta.
    - `name` (str): Buscar coincidencias parciales de texto en el nombre.
@@ -198,6 +213,7 @@ Endpoints:
 El proyecto cuenta con una suite completa de 29 pruebas unitarias y de integracion que verifican todos los endpoints, casos de exito, validaciones de tipos, errores 400 y errores 404.
 
 Para ejecutar todas las pruebas y comprobar que el resultado este en verde:
+
 ```bash
 python -m pytest -v
 ```
