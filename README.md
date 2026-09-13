@@ -2,20 +2,6 @@
 
 # Trabajo Practico 1 - FastAPI + ABM
 
-API REST desarrollada con FastAPI que implementa dos modulos de ABM (Alta, Baja y Modificacion) completos con almacenamiento en memoria y validacion mediante modelos Pydantic:
-
-1. ABM de Usuarios (entidad provista por la catedra: id, name, is_active).
-2. ABM de Productos (entidad propia de 5 campos: id, name, category, price, stock).
-
----
-
-## Requisitos Previos
-
-- Python 3.10 o superior instalado en el sistema.
-- Gestor de paquetes pip.
-
----
-
 ## Instalacion y Puesta en Marcha
 
 ### 1. Clonar o ubicarse en el directorio del proyecto
