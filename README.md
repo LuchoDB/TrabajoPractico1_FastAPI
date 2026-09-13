@@ -2,7 +2,7 @@
 
 # Trabajo Practico 1 - FastAPI + ABM
 
-## Instalacion y Puesta en Marcha
+## Instalacion
 
 ### 1. Clonar o ubicarse en el directorio del proyecto
 
@@ -11,7 +11,7 @@ git clone https://github.com/LuchoDB/TrabajoPractico1_FastAPI.git
 cd TrabajoPractico1_FastAPI
 ```
 
-### 2. Crear un entorno virtual (recomendado)
+### 2. Crear un entorno virtual
 
 En Windows (PowerShell):
 
@@ -88,7 +88,7 @@ TrabajoPractico1_FastAPI/
 |-- .gitignore           # Archivos y carpetas ignorados por git
 |-- models/
 |   |-- __init__.py      # Exportacion de modelos
-|   |-- users.py         # Modelos Pydantic para Usuarios (entidad catedra)
+|   |-- users.py         # Modelos Pydantic para Usuarios (entidad que dio el profesor)
 |   `-- products.py      # Modelos Pydantic para Productos (entidad propia: 5 campos)
 `-- routers/
     |-- __init__.py      # Exportacion de routers
@@ -100,13 +100,13 @@ TrabajoPractico1_FastAPI/
 
 ## Detalle de Endpoints Disponibles
 
-### Endpoint Raiz
+### Endpoint raiz
 
 - `GET /`: Devuelve un mensaje de bienvenida y los enlaces a la documentacion.
 
 ---
 
-### ABM de Usuarios (`/users`)
+### ABM de usuarios (`/users`)
 
 Entidad User definida por la catedra con los campos:
 
@@ -144,7 +144,7 @@ Endpoints:
 
 ---
 
-### ABM de Entidad Propia: Productos (`/products`)
+### ABM de la entidad propia: Productos (`/products`)
 
 Entidad Product con exactamente 5 campos:
 
